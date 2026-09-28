@@ -130,3 +130,9 @@ document.querySelectorAll('.download-link, .download-card a').forEach((downloadB
   downloadButton.href = './downloads/SteamElf.rar';
   downloadButton.setAttribute('download', 'SteamElf.rar');
 });
+
+// The download section can be removed from the page without breaking these CTAs.
+document.querySelectorAll('a[href="#download"]').forEach((downloadButton) => {
+  downloadButton.href = './downloads/SteamElf.rar';
+  downloadButton.setAttribute('download', 'SteamElf.rar');
+});
