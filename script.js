@@ -1,6 +1,21 @@
 const header = document.querySelector('.site-header');
 window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 12));
 
+// Keep the homepage URL clean instead of showing /#home in the browser bar.
+const cleanHomeUrl = () => {
+  if (window.location.hash === '#home') {
+    window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+  }
+};
+cleanHomeUrl();
+document.querySelectorAll('a[href="#home"]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+    window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+  });
+});
+
 // Use the icon image files supplied in public/.
 document.querySelectorAll('.steam-icon').forEach((icon) => {
   icon.innerHTML = '<img src="public/steam-logo-icon-7.png" alt="Steam">';
