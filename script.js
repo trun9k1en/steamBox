@@ -1,18 +1,17 @@
 const header = document.querySelector('.site-header');
 window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 12));
 
-// Keep the homepage URL clean instead of showing /#home in the browser bar.
-const cleanHomeUrl = () => {
-  if (window.location.hash === '#home') {
-    window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
-  }
+// Scroll to sections without leaving #home, #pass or #download in the URL.
+const cleanHash = () => {
+  window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
 };
-cleanHomeUrl();
-document.querySelectorAll('a[href="#home"]').forEach((link) => {
+if (window.location.hash) cleanHash();
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener('click', (event) => {
     event.preventDefault();
-    document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
-    window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+    const target = document.querySelector(link.getAttribute('href'));
+    target?.scrollIntoView({ behavior: 'smooth' });
+    cleanHash();
   });
 });
 
