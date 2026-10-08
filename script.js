@@ -142,7 +142,7 @@ if (footer) {
   `;
 }
 
-document.querySelectorAll('.download-link, .download-card a').forEach((downloadButton) => {
+document.querySelectorAll('.button.primary, .download-link, .download-card a').forEach((downloadButton) => {
   downloadButton.href = './download.php';
   downloadButton.removeAttribute('download');
 });
