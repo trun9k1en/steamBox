@@ -102,7 +102,7 @@ iconPolish.textContent = `
   .design-footer-inner { min-height: 94px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: #8b98aa; text-align: center; }
   .design-footer-inner p { margin: 0; font-size: 10px; line-height: 1.4; }
   .design-footer-inner p:last-child { color: #aeb8c5; }
-  .download-count { margin-top: 16px; color: #9fb0c2; font-size: 11px; text-align: center; }
+  .download-count { min-height: 16px; margin-top: 16px; color: #9fb0c2; font-size: 11px; text-align: center; }
   .download-count strong { color: #54baff; font-weight: 700; }
 `;
 document.head.appendChild(iconPolish);
@@ -176,5 +176,5 @@ fetch('./download-count.php', { cache: 'no-store' })
       : `Đã tải <strong>${Number(data.downloads).toLocaleString('vi-VN')}</strong> lượt`;
   })
   .catch(() => {
-    downloadCount.innerHTML = '';
+    downloadCount.innerHTML = 'Lượt tải đang cập nhật';
   });
