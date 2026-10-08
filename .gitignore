@@ -1,5 +1,6 @@
 downloads/*
 !downloads/README.txt
+data/*
+!data/.gitkeep
 .DS_Store
 Thumbs.db
-

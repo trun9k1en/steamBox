@@ -95,6 +95,8 @@ iconPolish.textContent = `
   .design-footer-inner { min-height: 94px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: #8b98aa; text-align: center; }
   .design-footer-inner p { margin: 0; font-size: 10px; line-height: 1.4; }
   .design-footer-inner p:last-child { color: #aeb8c5; }
+  .download-count { margin-top: 16px; color: #9fb0c2; font-size: 11px; text-align: center; }
+  .download-count strong { color: #54baff; font-weight: 700; }
 `;
 document.head.appendChild(iconPolish);
 
@@ -141,12 +143,27 @@ if (footer) {
 }
 
 document.querySelectorAll('.download-link, .download-card a').forEach((downloadButton) => {
-  downloadButton.href = 'https://file.thundercloud.group/steamelfvi/client/onlineinst_vi.exe';
-  downloadButton.setAttribute('download', 'SteamElf.rar');
+  downloadButton.href = './download.php';
+  downloadButton.removeAttribute('download');
 });
 
 // The download section can be removed from the page without breaking these CTAs.
 document.querySelectorAll('a[href="#download"]').forEach((downloadButton) => {
-  downloadButton.href = 'https://file.thundercloud.group/steamelfvi/client/onlineinst_vi.exe';
-  downloadButton.setAttribute('download', 'SteamElf.rar');
+  downloadButton.href = './download.php';
+  downloadButton.removeAttribute('download');
 });
+
+const downloadCount = document.createElement('div');
+downloadCount.className = 'download-count';
+downloadCount.innerHTML = 'Đã tải <strong>...</strong> lượt';
+document.querySelector('.actions')?.after(downloadCount);
+fetch('./download-count.php', { cache: 'no-store' })
+  .then((response) => response.ok ? response.json() : Promise.reject(response.status))
+  .then((data) => {
+    downloadCount.innerHTML = data.downloads === null
+      ? 'Lượt tải đang được cập nhật'
+      : `Đã tải <strong>${Number(data.downloads).toLocaleString('vi-VN')}</strong> lượt`;
+  })
+  .catch(() => {
+    downloadCount.innerHTML = '';
+  });
