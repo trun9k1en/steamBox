@@ -102,8 +102,8 @@ iconPolish.textContent = `
   .design-footer-inner { min-height: 94px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: #8b98aa; text-align: center; }
   .design-footer-inner p { margin: 0; font-size: 10px; line-height: 1.4; }
   .design-footer-inner p:last-child { color: #aeb8c5; }
-  .download-count { min-height: 16px; margin-top: 16px; color: #9fb0c2; font-size: 11px; text-align: center; }
-  .download-count strong { color: #54baff; font-weight: 700; }
+  .download-count { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; margin: 18px auto 0; padding: 8px 18px; border: 1px solid rgba(84, 186, 255, .72); border-radius: 999px; background: rgba(7, 32, 55, .92); box-shadow: 0 0 0 3px rgba(84, 186, 255, .1), 0 8px 24px rgba(0, 0, 0, .25); color: #f1f8ff; font-size: 14px; font-weight: 600; letter-spacing: .15px; text-align: center; }
+  .download-count strong { color: #61c5ff; font-size: 20px; font-weight: 800; }
 `;
 document.head.appendChild(iconPolish);
 
@@ -171,7 +171,7 @@ document.querySelector('.actions')?.after(downloadCount);
 fetch('./download-count.php', { cache: 'no-store' })
   .then((response) => response.ok ? response.json() : Promise.reject(response.status))
   .then((data) => {
-    downloadCount.innerHTML = data.downloads === null
+  downloadCount.innerHTML = data.downloads === null
       ? 'Lượt tải đang được cập nhật'
       : `Đã tải <strong>${Number(data.downloads).toLocaleString('vi-VN')}</strong> lượt`;
   })
