@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 const DOWNLOAD_URL = 'https://file.thundercloud.group/steamelfvi/client/onlineinst_vi.exe';
 const COUNTER_FILE = __DIR__ . '/data/downloads.sqlite';
+const STARTING_DOWNLOADS = 1000;
 
 try {
     $dataDir = dirname(COUNTER_FILE);
@@ -15,7 +16,8 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
     $db->exec('CREATE TABLE IF NOT EXISTS download_stats (name TEXT PRIMARY KEY, total INTEGER NOT NULL DEFAULT 0)');
-    $db->exec("INSERT INTO download_stats (name, total) VALUES ('steambox', 0) ON CONFLICT(name) DO NOTHING");
+    $db->exec("INSERT INTO download_stats (name, total) VALUES ('steambox', " . STARTING_DOWNLOADS . ") ON CONFLICT(name) DO NOTHING");
+    $db->exec("UPDATE download_stats SET total = " . STARTING_DOWNLOADS . " WHERE name = 'steambox' AND total < " . STARTING_DOWNLOADS);
     $db->exec("UPDATE download_stats SET total = total + 1 WHERE name = 'steambox'");
 
     header('Cache-Control: no-store, no-cache, must-revalidate');
