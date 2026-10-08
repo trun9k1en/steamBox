@@ -8,8 +8,10 @@ const cleanHash = () => {
 if (window.location.hash) cleanHash();
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener('click', (event) => {
+    const href = link.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
     event.preventDefault();
-    const target = document.querySelector(link.getAttribute('href'));
+    const target = document.querySelector(href);
     target?.scrollIntoView({ behavior: 'smooth' });
     cleanHash();
   });
@@ -58,6 +60,11 @@ iconPolish.textContent = `
   .pass { background: transparent; }
   .pass-banner.image-pass-banner { padding: 0; border: 0; background: transparent; box-shadow: none; overflow: hidden; }
   .pass-banner.image-pass-banner img { display: block; width: 100%; height: auto; border-radius: 7px; }
+  .pass-banner.image-pass-banner { position: relative; }
+  .pass-plan-link { position: absolute; top: 59%; width: 30%; height: 29%; z-index: 2; border-radius: 10px; cursor: pointer; }
+  .pass-plan-link.monthly { left: 18.7%; }
+  .pass-plan-link.quarterly { right: 18.7%; }
+  .pass-plan-link:hover { background: rgba(84, 186, 255, .08); outline: 1px solid rgba(84, 186, 255, .65); }
   .app-window.preview-image { padding: 0; overflow: hidden; background: transparent; }
   .app-window.preview-image img { display: block; width: 100%; height: auto; }
   .showcase { align-items: start; }
@@ -105,6 +112,10 @@ const passBanner = document.querySelector('.pass-banner');
 if (passBanner) {
   passBanner.innerHTML = '<img src="public/pass.png" alt="Steam Game Pass - 49.000đ và 99.000đ mỗi tháng">';
   passBanner.classList.add('image-pass-banner');
+  passBanner.insertAdjacentHTML('beforeend', `
+    <a class="pass-plan-link monthly" href="${discordUrl}" target="_blank" rel="noopener noreferrer" aria-label="Đăng ký gói Game Pass 49.000đ mỗi tháng" title="Đăng ký gói 49.000đ qua Discord"></a>
+    <a class="pass-plan-link quarterly" href="${discordUrl}" target="_blank" rel="noopener noreferrer" aria-label="Đăng ký gói Game Pass 99.000đ mỗi tháng" title="Đăng ký gói 99.000đ qua Discord"></a>
+  `);
 }
 
 const preview = document.querySelector('.app-window');
